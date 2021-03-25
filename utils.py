@@ -1,4 +1,5 @@
 import numpy as np 
+import tensorflow as tf
 from PIL import Image
 from scipy.io import loadmat,savemat
 from array import array
@@ -126,3 +127,11 @@ def save_obj(path,v,f,c):
 			file.write('f %d %d %d\n'%(f[i,0],f[i,1],f[i,2]))
 
 	file.close()
+
+# load .pb file into tensorflow graph
+def load_graph(graph_filename):
+	with tf.gfile.GFile(graph_filename,'rb') as f:
+		graph_def = tf.GraphDef()
+		graph_def.ParseFromString(f.read())
+
+	return graph_def
